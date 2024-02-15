@@ -15,8 +15,6 @@
     "netlify-cms": "npx netlify-cms-proxy-server"
   },
   "devDependencies": {
-    "@fontsource/lato": "^4.5.2",
-    "@fortawesome/free-brands-svg-icons": "^6.0.0",
     "@fortawesome/free-solid-svg-icons": "^6.0.0",
     "@playwright/test": "1.25.0",
     "@sveltejs/adapter-static": "^1.0.0",
@@ -42,17 +40,12 @@
   "type": "module",
   "dependencies": {
     "@fontsource/dm-sans": "^4.5.9",
-    "@fontsource/jetbrains-mono": "^5.0.18",
     "@fontsource/poppins": "^4.5.10",
-    "@lukeed/uuid": "^2.0.0",
     "@opensearch-project/opensearch": "^1.0.2",
     "dotenv": "^16.0.0",
     "front-matter": "^4.0.2",
     "js-yaml": "^4.1.0",
     "marked": "^11.2.0",
-    "mdsvex": "^0.10.5",
-    "node-fetch": "^3.2.0",
-    "node-sass": "^8.0.0",
-    "sass": "^1.56.1"
+    "mdsvex": "^0.10.5"
   }
 }
