@@ -7,6 +7,37 @@
   export let showHeader = false
 
   const uploaders = [mapOfTheWeek.map.uploader, ...mapOfTheWeek.map.collaborators]
+
+  const verifiedBadge =
+    '<img class="verified" src="/verified.svg" alt="Verified" title="Verified" />'
+
+  const generateHtmlStringForMapper = (
+    uploaderId: number,
+    uploaderName: string,
+    isVerifiedMapper: boolean,
+  ) => `
+    <a class="profile-link" href="https://beatsaver.com/profile/${uploaderId}">${uploaderName}${
+    isVerifiedMapper ? verifiedBadge : ''
+  }</a>`
+
+  const chooseSeparator = (currentIndex: number, totalLength: number) => {
+    // Cover the case where there is only one item
+    if (currentIndex === totalLength - 1) {
+      return ''
+    }
+
+    if (currentIndex === totalLength - 2) {
+      return ' and '
+    }
+
+    return ', '
+  }
+
+  const uploadersHTMLString = uploaders
+    .map((uploader) =>
+      generateHtmlStringForMapper(uploader.id, uploader.name, uploader.verifiedMapper),
+    )
+    .reduce((prev, next, i) => `${prev}${next}${chooseSeparator(i, uploaders.length)}`, '')
 </script>
 
 <div class="motw-container">
@@ -32,24 +63,8 @@
               {mapOfTheWeek.map.name}
             </a>
           </h2>
-          <!-- eslint-disable -->
-          <!-- prettier-ignore-start -->
-          <!-- @formatter:off -->
           <p class="map-uploader">
-            By
-            {#each uploaders as uploader, i}
-              <a class="profile-link" href="https://beatsaver.com/profile/{uploader.id}">
-                {uploader.name}</a><!--
-           -->{#if uploader.verifiedMapper}
-                <img class="verified" src="/verified.svg" alt="Verified" title="Verified" /><!--
-           -->{/if}<!--
-
-           -->{#if i < uploaders.length - 2}
-                {", "}
-              {:else if i === uploaders.length - 2}
-                {" and "}
-              {/if}
-            {/each}
+            By {@html uploadersHTMLString}
           </p>
           <!-- @formatter:on -->
           <!-- prettier-ignore-end -->
@@ -66,6 +81,15 @@
 
   :global(.motw-container > .card > .container) {
     padding-top: 0rem !important;
+  }
+
+  // Globalling this is necessary because of the usage of an HTML string
+  :global(.motw-container .card-body img.verified) {
+    height: 1rem;
+    width: 1rem;
+    /* Margin bottom to counter the illusion of it not being center */
+    margin: 0 0 0.15rem 0.3rem;
+    vertical-align: middle;
   }
 
   .motw-container {
@@ -152,14 +176,6 @@
 
   .map-uploader {
     margin-bottom: 1rem;
-  }
-
-  .verified {
-    height: 1rem;
-    width: 1rem;
-    /* Margin bottom to counter the illusion of it not being center */
-    margin: 0 0 0.15rem 0.3rem;
-    vertical-align: middle;
   }
 
   .map-link {
